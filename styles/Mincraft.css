@@ -13,20 +13,25 @@ body {
   width: 100vmin;
   height: 100vmin;
   display: grid;
-  grid-template-columns: repeat(18, 1fr);
+  grid-template-columns: repeat(19, 1fr);
   grid-template-rows: repeat(18, 1fr);
 }
 
-/* #gameBoard > *:hover {
+#gameBoard > *:hover {
   border: 1px solid black;
-} */
+}
+
+.swords:hover {
+  border: 1px solid blue;
+}
 
 .sideBar {
-  margin-left: 50px;
+  margin-left: 5%;
+  margin-top: 10px;
+  display: flex;
   background-color: rgb(204, 204, 204);
   width: 20vmin;
-  height: 30vmin;
-  display: flex;
+  /* height: 30vmin; */
   padding: 1%;
   flex-direction: column;
   align-items: center;
@@ -40,6 +45,19 @@ body {
   align-items: center;
   justify-content: center;
   gap: 20px;
+}
+
+.cont {
+  /* margin-left: 50px;
+  display: flex;
+  background-color: rgb(204, 204, 204);
+  width: 20vmin;
+  height: 30vmin;
+  padding: 1%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; */
 }
 
 .axe {
@@ -56,35 +74,55 @@ body {
 
 .swords {
   background-size: 100%;
-  width: 50px;
-  height: 50px;
+  width: 5vmin;
+  height: 5vmin;
   border: 1px black solid;
 }
 
-.matirialBox {
-  width: 30px;
-  height: 30px;
+.materialBox {
+  width: 5vmin;
+  height: 5vmin;
   border: 1px black solid;
+  position: relative;
+}
+
+.materialBox span {
+  background-color: white;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  font-size: 2vmin;
+  padding: 0.2vmin;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.selected-tool {
+  background-color: green;
+}
+
+.invalid {
+  background-color: red;
 }
 
 .tree {
-  background: url("/assets/img/css_sprites.png") -110px -110px;
+  background: url("/assets/img/css_sprites.png") -110px -110px no-repeat;
 }
 
 .leaves {
-  background: url("/assets/img/css_sprites.png") -210px -10px;
+  background: url("/assets/img/css_sprites.png") -210px -10px no-repeat;
 }
 
 .rock {
-  background: url("/assets/img/css_sprites.png") -10px -110px;
+  background: url("/assets/img/css_sprites.png") -10px -110px no-repeat;
 }
 
 .ground {
-  background: url("/assets/img/css_sprites.png") -110px -10px;
+  background: url("/assets/img/css_sprites.png") -110px -10px no-repeat;
 }
 
 .grass {
-  background: url("/assets/img/css_sprites.png") -10px -10px;
+  background: url("/assets/img/css_sprites.png") -10px -10px no-repeat;
 }
 .cloud {
   background-color: rgb(255, 255, 255);
