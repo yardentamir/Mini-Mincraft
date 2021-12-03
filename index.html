@@ -7,6 +7,11 @@
     <title>Mincraft Game</title>
     <!-- links -->
     <link rel="stylesheet" href="/styles/Mincraft.css" />
+    <link
+      rel="stylesheet"
+      href="styles/mobile.css"
+      media="only screen and (max-device-width: 480px)"
+    />
     <!-- scripts -->
     <script src="/js/Mincraft.js" defer></script>
   </head>
@@ -16,11 +21,11 @@
     </div> -->
     <div id="gameBoard"></div>
     <div class="cont">
-      <div class="sideBar">
-        <div class="toolBox"></div>
-      </div>
+      <div class="sideBar toolBox"></div>
       <div class="sideBar materialBar">
-        <button class="materialBox"></button>
+        <button id="lastClickedMaterial" class="materialBox module">
+          <!-- <div class="module-inside">Module</div> -->
+        </button>
       </div>
     </div>
   </body>

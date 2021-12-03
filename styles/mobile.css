@@ -1,0 +1,29 @@
+body {
+  display: block;
+  margin: 0 auto;
+  align-items: center;
+}
+.cont {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sideBar,
+.toolBox {
+  flex-direction: row;
+  width: auto;
+  height: auto;
+  margin-right: 5%;
+}
+
+.toolBox > *,
+.sideBar > * {
+  width: 10vmin;
+  height: 10vmin;
+}
+
+.materialBox span {
+  font-size: 4vmin;
+  padding: 0.2vmin;
+}
