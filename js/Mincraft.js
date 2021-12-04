@@ -272,18 +272,6 @@ const addToInventory = (lastClickedMaterial) => {
   MaterialInventoryElement.firstChild.textContent++;
 };
 
-const createMatrix = (row, column) => {
-  let matrix = [];
-  for (let i = 0; i < row; i++) {
-    const newRow = [];
-    for (let j = 0; j < column; j++) {
-      newRow.push({});
-    }
-    matrix.push(newRow);
-  }
-  console.log(matrix);
-};
-
 const userClickedPlay = ({ target }) => {
   setTimeout(() => {
     mainInfo.isStartGame = true;
