@@ -83,6 +83,7 @@ const createMaterialsBar = (materialName, materialIndex) => {
   materialBoxElement.appendChild(createButtonMaterial);
   createButtonMaterial.dataset.materialBoxId = materialIndex;
   createButtonMaterial.addEventListener("click", ToolOrMaterialSelected);
+  lastClickedMaterialElement.addEventListener("click", putLastMaterialInSky);
 };
 
 const printGameBoard = () => {
@@ -90,6 +91,7 @@ const printGameBoard = () => {
     row.forEach((column, xIndex) => {
       const block = document.createElement("div");
       block.dataset.materialId = column;
+      block.dataset.materialXY = yIndex + "_" + xIndex;
       block.addEventListener("click", gameBoardClickHandler);
       block.classList.add(ARRAY_MATERIAL[column][0]);
       gameBoardElement.appendChild(block);
@@ -121,7 +123,9 @@ const userSelectedMaterial = (target) => {
     removeMaterialSelection();
     target.firstChild.classList.add("selected-material");
     mainInfo.selectedMaterial = target.dataset.materialBoxId;
-    return;
+    console.log("mat" + target.dataset.materialBoxId);
+    lastClickedMaterialElement.dataset.matchMaterialId =
+      target.dataset.materialBoxId;
   }
 };
 
@@ -144,24 +148,17 @@ const removeToolSelection = () => {
 
 const gameBoardClickHandler = ({ target }) => {
   const saveMaterialId = target.dataset.materialId;
+  console.log(saveMaterialId);
   const selectedTool = +mainInfo.selectedTool;
-  // lastClickedMaterialElement.dataset.matchMaterialId = -1;
   mainInfo.lastClickedMaterial = target.dataset.materialId;
-
-  //   mainInfo.lastPickedMaterial =
-  //   lastClickedMaterialElement.dataset.matchMaterialId;
-  // console.log(mainInfo.lastPickedMaterial);
-  // mainInfo.lastPickedMaterial = -1;
-  // lastClickedMaterialElement.dataset.matchMaterialId = -1;
-  // putLastMaterialInSky(target, saveMaterialId);
   checkMatchMaterialAndTool(target, selectedTool, saveMaterialId);
-  putSelectedMaterialInSky(target, saveMaterialId);
+  putSelectedMaterialInSky(target, saveMaterialId, selectedTool);
 };
 
 const checkMatchMaterialAndTool = (target, selectedTool, saveMaterialId) => {
   const lastClickedMaterial = mainInfo.lastClickedMaterial;
   if (selectedTool === -1) return;
-  removeLastPickedClass();
+  removeLastPickedClass(lastClickedMaterial);
   // match between tool and material
   if (saveMaterialId && ARRAY_MATERIAL[saveMaterialId][1] === selectedTool) {
     lastClickedMaterialElement.dataset.matchMaterialId = saveMaterialId;
@@ -175,58 +172,74 @@ const checkMatchMaterialAndTool = (target, selectedTool, saveMaterialId) => {
     addToInventory(lastClickedMaterial);
     // not a match
   } else {
-    if (mainInfo.lastPickedMaterial != -1) {
-      const selectedToolElement = document.querySelector(
-        `[data-tool-id='${selectedTool}']`
-      );
-      selectedToolElement.classList.add("invalid");
-      setTimeout(() => {
-        selectedToolElement.classList.remove("invalid");
-      }, 500);
-    }
+    const selectedToolElement = document.querySelector(
+      `[data-tool-id='${selectedTool}']`
+    );
+    selectedToolElement.classList.add("invalid");
+    setTimeout(() => {
+      selectedToolElement.classList.remove("invalid");
+    }, 500);
   }
 };
 
-const removeLastPickedClass = () => {
+const removeLastPickedClass = (lastClickedMaterial) => {
   const lastClickedMaterialClasses = [...lastClickedMaterialElement.classList];
   lastClickedMaterialClasses.forEach((classs) => {
     if (arrOfMaterials.includes(classs)) {
       lastClickedMaterialElement.classList.remove(classs);
     }
   });
+  lastClickedMaterialElement.classList.add(
+    ARRAY_MATERIAL[lastClickedMaterial][0]
+  );
 };
 
-// const putLastMaterialInSky = (target, saveMaterialId) => {
-//   const lastClickedMaterial = mainInfo.lastClickedMaterial;
-//   console.log(lastClickedMaterial);
+const putLastMaterialInSky = (target) => {
+  removeToolSelection();
 
-//   const lastPickedMaterial = mainInfo.lastPickedMaterial;
-//   console.log(lastPickedMaterial);
-//   if (lastPickedMaterial == -1 || lastClickedMaterial != 0) return;
-//   const materialElement = document.querySelector(
-//     `[data-material-box-id='${lastPickedMaterial}']`
-//   );
-//   console.log(materialElement);
-//   // materialElement.classList.add("selected-material");
-//   // const whichMaterialNum = mainInfo.selectedMaterial;
-// };
+  const lastPickedMaterial = mainInfo.lastPickedMaterial;
+  console.log(lastPickedMaterial);
+  // if (lastPickedMaterial == -1 || lastClickedMaterial != 0) return;
+  const materialElement = document.querySelector(
+    `[data-material-box-id='${lastPickedMaterial}']`
+  );
+  if (materialElement) {
+    if (materialElement.firstChild.textContent < 1) return;
+    materialElement.firstChild.classList.add("selected-material");
+  }
 
-const putSelectedMaterialInSky = (target, selectedBlockId) => {
-  const whichMaterialNum = mainInfo.selectedMaterial;
+  // materialElement.classList.add("selected-material");
+  // const whichMaterialNum = mainInfo.selectedMaterial;
+};
+
+const putSelectedMaterialInSky = (target, selectedBlockId, selectedTool) => {
+  let whichMaterialNum = mainInfo.selectedMaterial;
+  console.log("last:" + lastClickedMaterialElement.dataset.matchMaterialId);
+  mainInfo.selectedMaterial = selectedBlockId;
+  console.log("whichMaterialNum", whichMaterialNum);
+  if (selectedTool === -1)
+    whichMaterialNum = lastClickedMaterialElement.dataset.matchMaterialId;
   const materialElement = document.querySelector(".selected-material");
   if (materialElement) {
     if (selectedBlockId != 0 || materialElement.textContent < 1) return;
     materialElement.textContent--;
-    if (materialElement.textContent == 0)
+    if (materialElement.textContent == 0) {
       materialElement.classList.remove("selected-material");
+      lastClickedMaterialElement.dataset.matchMaterialId = -1;
+      lastClickedMaterialElement.classList.remove(
+        ARRAY_MATERIAL[whichMaterialNum][0]
+      );
+    }
     target.classList.remove("sky");
     target.dataset.materialId = whichMaterialNum;
     target.classList.add(ARRAY_MATERIAL[whichMaterialNum][0]);
     //put last material in sky
     mainInfo.lastClickedMaterial = -1;
-    lastClickedMaterialElement.classList.remove(
-      ARRAY_MATERIAL[whichMaterialNum][0]
-    );
+    console.log(selectedTool);
+    if (selectedTool != -1)
+      lastClickedMaterialElement.classList.remove(
+        ARRAY_MATERIAL[whichMaterialNum][0]
+      );
   }
 };
 
