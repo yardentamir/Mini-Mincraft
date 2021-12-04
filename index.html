@@ -16,16 +16,36 @@
     <script src="/js/Mincraft.js" defer></script>
   </head>
   <body>
-    <!-- <div class="startGameCover">
-      <button>Start</button>
-    </div> -->
-    <div id="gameBoard"></div>
-    <div class="cont">
-      <div class="sideBar toolBox"></div>
-      <div class="sideBar materialBar">
-        <button id="lastClickedMaterial" class="materialBox module">
-          <!-- <div class="module-inside">Module</div> -->
-        </button>
+    <div class="container">
+      <div class="start-game-cover">
+        <div class="center-cont">
+          <div class="minecraft-title"></div>
+          <button id="playButton" type="button" class="start-game-button">
+            Play
+          </button>
+          <button id="descriptionBtn" class="start-game-button dis-btn">
+            description
+          </button>
+          <span id="discriptionSpan" class="discription display-none"
+            >coming soon..</span
+          >
+          <span>created by Yarden Tamir</span>
+        </div>
+      </div>
+      <div class="gameBoard display-none"></div>
+      <div class="cont display-none">
+        <h3>Tools</h3>
+        <div class="sideBar toolBox"></div>
+        <h3>Inventory</h3>
+        <div class="sideBar">
+          <button id="lastClickedMaterial" class="materialBox"></button>
+          <button id="chest" class="materialBox chest-closed"></button>
+          <div class="materialBar visibility-hidden"></div>
+        </div>
+        <div class="sideBar">
+          <button id="restartButton" class="">restart</button>
+          <button id="backButton" class="">back</button>
+        </div>
       </div>
     </div>
   </body>

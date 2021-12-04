@@ -15,35 +15,36 @@ const arrOfMaterials = ARRAY_MATERIAL.flat(Infinity).filter(
   (material) => typeof material === "string"
 );
 
-const gameBoardElement = document.querySelector("#gameBoard");
+const gameBoardElement = document.querySelector(".gameBoard");
 const toolBoxElement = document.querySelector(".toolBox");
 const materialBoxElement = document.querySelector(".materialBar");
 const lastClickedMaterialElement = document.querySelector(
   "#lastClickedMaterial"
 );
+const chestElement = document.querySelector("#chest");
 
 const mainInfo = {
   isStartGame: false,
   gameBoardMatrix: [
     //19*19
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 2, 2, 0, 0, 3, 3, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 2, 2, 0, 0, 3, 3, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-    [4, 4, 4, 3, 3, 4, 4, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4],
-    [4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 2, 0, 0, 3, 3, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 2, 0, 0, 3, 3, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    [4, 4, 4, 3, 3, 4, 4, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4],
+    [4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4],
   ],
   selectedTool: -1, // axe = 0 // pickaxe =1 // shovel = 2
   selectedMaterial: -1, // 1 = wood // 2 = levees // 3 = metal // 4 = dirt // 6 = clouds
@@ -62,6 +63,7 @@ const gameInit = () => {
   filteredMaterials.forEach((material) => {
     createMaterialsBar(material[0], ARRAY_MATERIAL.indexOf(material));
   });
+  chestElement.addEventListener("click", openOrCloseChestListener);
 };
 
 const createToolsBar = (tool) => {
@@ -84,6 +86,19 @@ const createMaterialsBar = (materialName, materialIndex) => {
   createButtonMaterial.dataset.materialBoxId = materialIndex;
   createButtonMaterial.addEventListener("click", ToolOrMaterialSelected);
   lastClickedMaterialElement.addEventListener("click", putLastMaterialInSky);
+};
+
+const openOrCloseChestListener = ({ target }) => {
+  const classesArrChest = [...target.classList];
+  if (classesArrChest.includes("chest-closed")) {
+    target.classList.remove("chest-closed");
+    target.classList.add("chest-open");
+    materialBoxElement.classList.remove("visibility-hidden");
+    return;
+  }
+  target.classList.remove("chest-open");
+  target.classList.add("chest-closed");
+  materialBoxElement.classList.add("visibility-hidden");
 };
 
 const printGameBoard = () => {
@@ -123,7 +138,6 @@ const userSelectedMaterial = (target) => {
     removeMaterialSelection();
     target.firstChild.classList.add("selected-material");
     mainInfo.selectedMaterial = target.dataset.materialBoxId;
-    console.log("mat" + target.dataset.materialBoxId);
     lastClickedMaterialElement.dataset.matchMaterialId =
       target.dataset.materialBoxId;
   }
@@ -148,7 +162,6 @@ const removeToolSelection = () => {
 
 const gameBoardClickHandler = ({ target }) => {
   const saveMaterialId = target.dataset.materialId;
-  console.log(saveMaterialId);
   const selectedTool = +mainInfo.selectedTool;
   mainInfo.lastClickedMaterial = target.dataset.materialId;
   checkMatchMaterialAndTool(target, selectedTool, saveMaterialId);
@@ -179,27 +192,32 @@ const checkMatchMaterialAndTool = (target, selectedTool, saveMaterialId) => {
     setTimeout(() => {
       selectedToolElement.classList.remove("invalid");
     }, 500);
+    lastClickedMaterialElement.dataset.matchMaterialId = -1;
   }
 };
 
-const removeLastPickedClass = (lastClickedMaterial) => {
+const removeLastPickedClass = () => {
   const lastClickedMaterialClasses = [...lastClickedMaterialElement.classList];
   lastClickedMaterialClasses.forEach((classs) => {
     if (arrOfMaterials.includes(classs)) {
       lastClickedMaterialElement.classList.remove(classs);
     }
   });
-  lastClickedMaterialElement.classList.add(
-    ARRAY_MATERIAL[lastClickedMaterial][0]
-  );
 };
 
-const putLastMaterialInSky = (target) => {
+const putLastMaterialInSky = () => {
   removeToolSelection();
 
+  if (document.querySelectorAll(".selected-material")) {
+    document
+      .querySelectorAll(".selected-material")
+      .forEach((selectedMaterial) => {
+        selectedMaterial.classList.remove("selected-material");
+      });
+  }
   const lastPickedMaterial = mainInfo.lastPickedMaterial;
-  console.log(lastPickedMaterial);
-  // if (lastPickedMaterial == -1 || lastClickedMaterial != 0) return;
+  mainInfo.selectedMaterial = mainInfo.lastPickedMaterial;
+
   const materialElement = document.querySelector(
     `[data-material-box-id='${lastPickedMaterial}']`
   );
@@ -214,14 +232,18 @@ const putLastMaterialInSky = (target) => {
 
 const putSelectedMaterialInSky = (target, selectedBlockId, selectedTool) => {
   let whichMaterialNum = mainInfo.selectedMaterial;
-  console.log("last:" + lastClickedMaterialElement.dataset.matchMaterialId);
+  console.log(mainInfo);
   mainInfo.selectedMaterial = selectedBlockId;
-  console.log("whichMaterialNum", whichMaterialNum);
   if (selectedTool === -1)
     whichMaterialNum = lastClickedMaterialElement.dataset.matchMaterialId;
   const materialElement = document.querySelector(".selected-material");
   if (materialElement) {
-    if (selectedBlockId != 0 || materialElement.textContent < 1) return;
+    if (
+      selectedBlockId != 0 ||
+      materialElement.textContent < 1 ||
+      lastClickedMaterialElement.dataset.matchMaterialId == -1
+    )
+      return;
     materialElement.textContent--;
     if (materialElement.textContent == 0) {
       materialElement.classList.remove("selected-material");
@@ -262,4 +284,67 @@ const createMatrix = (row, column) => {
   console.log(matrix);
 };
 
-gameInit();
+const userClickedPlay = ({ target }) => {
+  setTimeout(() => {
+    mainInfo.isStartGame = true;
+    document.querySelectorAll(".display-none").forEach((show) => {
+      show.classList.remove("display-none");
+    });
+    target.parentElement.parentElement.classList.add("display-none");
+    gameInit();
+  }, 500);
+};
+
+const userClickedDescription = () => {
+  document.querySelector("#discriptionSpan").classList.toggle("display-none");
+};
+
+const restart = (whatButton) => {
+  const allTools = document.querySelectorAll(".swords");
+  allTools.forEach((tool) => {
+    tool.remove();
+  });
+  const allMaterials = document.querySelectorAll("[data-material-box-id]");
+  allMaterials.forEach((material) => {
+    material.remove();
+  });
+  const blocksGame = document.querySelectorAll("[data-material-id]");
+  blocksGame.forEach((block) => {
+    block.remove();
+  });
+  mainInfo.lastClickedMaterial = -1;
+  mainInfo.lastPickedMaterial = -1;
+  lastClickedMaterialElement.dataset.matchMaterialId = -1;
+  removeLastPickedClass();
+  removeToolSelection();
+  removeMaterialSelection();
+  if (whatButton.id != "backButton") gameInit();
+};
+
+const userClickedBack = ({ target }) => {
+  restart(target);
+  const coverElement = document.querySelector(".display-none");
+  coverElement.classList.remove("display-none");
+  const elementsToHide = [
+    document.querySelector(".cont"),
+    document.querySelector(".gameBoard"),
+  ];
+  elementsToHide.forEach((element) => {
+    element.classList.add("display-none");
+    console.log(element);
+  });
+};
+
+document.querySelector("#restartButton").addEventListener("click", restart);
+
+document
+  .querySelector("#playButton")
+  .addEventListener("click", userClickedPlay);
+
+document
+  .querySelector("#descriptionBtn")
+  .addEventListener("click", userClickedDescription);
+
+document
+  .querySelector("#backButton")
+  .addEventListener("click", userClickedBack);

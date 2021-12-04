@@ -4,7 +4,6 @@ body {
   align-items: center;
 }
 .cont {
-  display: flex;
   justify-content: center;
   flex-direction: column;
 }
@@ -26,4 +25,21 @@ body {
 .materialBox span {
   font-size: 4vmin;
   padding: 0.2vmin;
+}
+
+.materialBox {
+  width: 10vmin;
+  height: 10vmin;
+}
+.materialBar {
+  width: auto;
+  display: flex;
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}
+
+.container {
+  display: block;
 }

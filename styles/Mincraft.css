@@ -1,23 +1,39 @@
-body {
+@font-face {
+  font-family: "minecraftFont";
+  src: url("/assets/fonts/Minecraft.ttf");
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font-family: "minecraftFont", sans-serif;
+}
+
+.container {
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  background-color: black;
+  font-size: 3vmin;
+  font-family: "minecraftFont", sans-serif;
+  color: white;
 }
 
-#gameBoard {
+.gameBoard {
   background-color: rgb(21, 147, 215);
   width: 100vmin;
   height: 100vmin;
   display: grid;
-  grid-template-columns: repeat(19, 1fr);
+  grid-template-columns: repeat(21, 1fr);
   grid-template-rows: repeat(18, 1fr);
 }
 
-#gameBoard > *:hover {
+.gameBoard > *:hover {
   border: 1px solid black;
 }
 
@@ -25,14 +41,24 @@ body {
   border: 1px solid blue;
 }
 
+.chest-closed {
+  background: url("/assets/img/tools/Chest_closed.png") no-repeat center/cover;
+}
+
+.chest-open {
+  background: url("/assets/img/tools/chest_open.png") no-repeat center/cover;
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}
+
 .sideBar {
-  margin-left: 5%;
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
   background-color: rgb(204, 204, 204);
-  width: 20vmin;
-  /* height: 30vmin; */
-  padding: 1%;
+  width: 12vmin;
+  padding: 5%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -48,15 +74,15 @@ body {
 }
 
 .axe {
-  background: url("/assets/img/icons8-minecraft-axe-100.png") no-repeat;
+  background: url("/assets/img/tools/Diamond_axe.png") no-repeat;
 }
 
 .pickaxe {
-  background: url("/assets/img/icons8-minecraft-pickaxe-100.png") no-repeat;
+  background: url("/assets/img/tools/EnchantedDiamondPickaxeNew.gif") no-repeat;
 }
 
 .shovel {
-  background: url("/assets/img/icons8-minecraft-shovel-100.png") no-repeat;
+  background: url("/assets/img/tools/150px-Diamond_Shovel.png") no-repeat;
 }
 
 .swords {
@@ -75,6 +101,7 @@ body {
 
 .materialBox span {
   background-color: white;
+  font-family: "minecraftFont", sans-serif;
   border-right: 1px solid black;
   border-top: 1px solid black;
   font-size: 2vmin;
@@ -82,6 +109,11 @@ body {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+#lastClickedMaterial {
+  width: 4vmin;
+  height: 4vmin;
 }
 
 .selected-tool {
@@ -93,23 +125,25 @@ body {
 }
 
 .tree {
-  background: url("/assets/img/css_sprites.png") -110px -110px no-repeat;
+  background: url("/assets/img/materials/wood.png") no-repeat center/cover;
 }
 
 .leaves {
-  background: url("/assets/img/css_sprites.png") -210px -10px no-repeat;
+  background: url("/assets/img/materials/Leaves_Block.png") no-repeat
+    center/cover;
 }
 
 .rock {
-  background: url("/assets/img/css_sprites.png") -10px -110px no-repeat;
+  background: url("/assets/img/materials/Stone.png") no-repeat center/cover;
 }
 
 .ground {
-  background: url("/assets/img/css_sprites.png") -110px -10px no-repeat;
+  background: url("/assets/img/materials/Dirt.png") no-repeat center/cover;
 }
 
 .grass {
-  background: url("/assets/img/css_sprites.png") -10px -10px no-repeat;
+  background: url("/assets/img/materials/Grass_Block.png") no-repeat
+    center/cover;
 }
 .cloud {
   background-color: rgb(255, 255, 255);
@@ -119,20 +153,68 @@ body {
   background-color: greenyellow;
 }
 
-/* .module {
-  position: relative;
-}
-.module::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+.start-game-cover {
+  background: url("/assets/img/start-game-img/apps.608.13510798887677013.5c7792f0-b887-4250-8c4e-4617af9c4509.jfif")
+    no-repeat center/cover;
   width: 100%;
   height: 100%;
-  background: url("/assets/img/css_sprites.png") -10px -10px no-repeat;
-  filter: blur(100px);
 }
-.module-inside {
-  /* This will make it stack on top of the ::before 
-  position: relative;
-} */
+
+.display-none {
+  display: none;
+}
+
+.start-game-button {
+  letter-spacing: 1.5px;
+  font-family: "minecraftFont", sans-serif;
+  width: 80vmin;
+  height: 7vmin;
+  font-size: 3vmin;
+  background-color: gray;
+  color: white;
+}
+
+.center-cont {
+  width: 50%;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-cont > * {
+  margin: 10px 0;
+}
+
+.minecraft-title {
+  background: url("/assets/img/start-game-img/80562-angle-text-pocket-edition-game-video-minecraft.png")
+    no-repeat center/cover;
+  width: 50vmin;
+  height: 10vmin;
+}
+
+.display-none {
+  display: none;
+}
+
+.discription {
+  margin: 0;
+  width: 80vmin;
+  padding-top: 10px;
+  height: 7vmin;
+  text-align: center;
+  background: rgba(22, 22, 22, 0.6);
+}
+
+.dis-btn {
+  margin-bottom: 0;
+}
+
+h3 {
+  font-size: 2vmin;
+  margin: 0;
+  color: #131313;
+}
