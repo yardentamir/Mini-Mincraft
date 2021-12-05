@@ -281,21 +281,16 @@ const userClickedPlay = ({ target }) => {
 };
 
 const userClickedDescription = () => {
-  document.querySelector("#discriptionSpan").classList.toggle("display-none");
+  document.querySelector("#descriptionSpan").classList.toggle("display-none");
 };
 
 const restart = (whatButton) => {
   const allTools = document.querySelectorAll(".swords");
-  allTools.forEach((tool) => {
-    tool.remove();
-  });
   const allMaterials = document.querySelectorAll("[data-material-box-id]");
-  allMaterials.forEach((material) => {
-    material.remove();
-  });
   const blocksGame = document.querySelectorAll("[data-material-id]");
-  blocksGame.forEach((block) => {
-    block.remove();
+  const itemsArr = [...allTools, ...allMaterials, ...blocksGame];
+  itemsArr.forEach((item) => {
+    item.remove();
   });
   mainInfo.lastClickedMaterial = -1;
   mainInfo.lastPickedMaterial = -1;
