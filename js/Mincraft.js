@@ -43,7 +43,7 @@ const mainInfo = {
     [0, 0, 2, 2, 0, 0, 3, 3, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
     [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
     [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-    [4, 4, 4, 3, 3, 4, 4, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4],
+    [4, 4, 4, 3, 3, 4, 4, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 3, 4],
     [4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4],
   ],
   selectedTool: -1, // axe = 0 // pickaxe =1 // shovel = 2
@@ -185,6 +185,8 @@ const checkMatchMaterialAndTool = (target, selectedTool, saveMaterialId) => {
     addToInventory(lastClickedMaterial);
     // not a match
   } else {
+    mainInfo.lastClickedMaterial = -1;
+    mainInfo.selectedMaterial = -1;
     const selectedToolElement = document.querySelector(
       `[data-tool-id='${selectedTool}']`
     );
@@ -207,7 +209,6 @@ const removeLastPickedClass = () => {
 
 const putLastMaterialInSky = () => {
   removeToolSelection();
-
   if (document.querySelectorAll(".selected-material")) {
     document
       .querySelectorAll(".selected-material")
@@ -225,17 +226,14 @@ const putLastMaterialInSky = () => {
     if (materialElement.firstChild.textContent < 1) return;
     materialElement.firstChild.classList.add("selected-material");
   }
-
-  // materialElement.classList.add("selected-material");
-  // const whichMaterialNum = mainInfo.selectedMaterial;
 };
 
 const putSelectedMaterialInSky = (target, selectedBlockId, selectedTool) => {
   let whichMaterialNum = mainInfo.selectedMaterial;
-  console.log(mainInfo);
-  mainInfo.selectedMaterial = selectedBlockId;
-  if (selectedTool === -1)
-    whichMaterialNum = lastClickedMaterialElement.dataset.matchMaterialId;
+  if (document.querySelector(".selected-material") && selectedTool === -1)
+    whichMaterialNum =
+      document.querySelector(".selected-material").parentElement.dataset
+        .materialBoxId;
   const materialElement = document.querySelector(".selected-material");
   if (materialElement) {
     if (
@@ -257,7 +255,6 @@ const putSelectedMaterialInSky = (target, selectedBlockId, selectedTool) => {
     target.classList.add(ARRAY_MATERIAL[whichMaterialNum][0]);
     //put last material in sky
     mainInfo.lastClickedMaterial = -1;
-    console.log(selectedTool);
     if (selectedTool != -1)
       lastClickedMaterialElement.classList.remove(
         ARRAY_MATERIAL[whichMaterialNum][0]
@@ -319,7 +316,6 @@ const userClickedBack = ({ target }) => {
   ];
   elementsToHide.forEach((element) => {
     element.classList.add("display-none");
-    console.log(element);
   });
 };
 
